@@ -4360,7 +4360,7 @@ static bool DecodeMovapd(X86DecoderState* const state, uint8_t opcode)
 
 static __inline bool DecodeCvtIntSimdOperandsMmx(X86DecoderState* const state, uint8_t srcSize)
 {
-	static const uint8_t destSize = g_sseOperandSizes[0]; // FIXME: VEX
+	const uint8_t destSize = g_sseOperandSizes[0]; // FIXME: VEX
 	ModRmByte modRm;
 	if (!Fetch(state, 1, &modRm.byte))
 		return false;
@@ -4373,7 +4373,7 @@ static __inline bool DecodeCvtIntSimdOperandsMmx(X86DecoderState* const state, u
 
 static __inline bool DecodeCvtIntSimdOperands(X86DecoderState* const state, uint8_t srcSize)
 {
-	static const uint8_t destSize = g_sseOperandSizes[0]; // FIXME: VEX
+	const uint8_t destSize = g_sseOperandSizes[0]; // FIXME: VEX
 	ModRmByte modRm;
 	if (!Fetch(state, 1, &modRm.byte))
 		return false;
