@@ -1255,7 +1255,7 @@ static bool DecodeGroup11(X86DecoderState* const state, uint8_t opcode)
 		state->instr->op = X86_MOV;
 		state->instr->operandCount = 2;
 	}
-	else if ((modRm.reg == 7) && (IsModRmRmFieldReg(modRm)))
+	else if ((IsModRmRmFieldReg(modRm)) && (modRm.reg == 7) && (modRm.rm == 0))
 	{
 		static const X86Operation operations[] = {X86_XABORT, X86_XBEGIN};
 
@@ -1918,7 +1918,7 @@ static bool DecodeGroup3(X86DecoderState* const state, uint8_t opcode)
 {
 	static const X86Operation operations[8] =
 	{
-		X86_TEST, X86_TEST, X86_NOT, X86_NEG,
+		X86_TEST, X86_INVALID, X86_NOT, X86_NEG,
 		X86_MUL, X86_IMUL, X86_DIV, X86_IDIV
 	};
 	const uint8_t operandSizeBit = (opcode & 1);
