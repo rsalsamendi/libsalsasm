@@ -1956,7 +1956,8 @@ static bool DecodeGroup3(X86DecoderState* const state, uint8_t opcode)
 
 static bool DecodeImulImm(X86DecoderState* const state, uint8_t opcode)
 {
-	const uint8_t operandSize = g_decoderModeSizeXref[state->operandMode];
+	static const uint8_t operandSizes[3] = {2, 4, 4};
+	const uint8_t operandSize = operandSizes[state->operandMode];
 	const uint8_t immSizes[2] = {operandSize, 1};
 	const size_t immSizeBit = (opcode >> 1) & 1;
 	const uint8_t immSize = immSizes[immSizeBit];
