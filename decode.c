@@ -1939,7 +1939,9 @@ static bool DecodeGroup3(X86DecoderState* const state, uint8_t opcode)
 
 	if (state->instr->op == X86_TEST)
 	{
-		if (!DecodeImmediate(state, &state->instr->operands[1], operandSize))
+		static const uint8_t testOperandSizes[2][3] = { {1, 1, 1}, {2, 4, 4} };
+		const uint8_t testOperandSize = testOperandSizes[operandSizeBit][state->operandMode];
+		if (!DecodeImmediate(state, &state->instr->operands[1], testOperandSize))
 			return false;
 		state->instr->operandCount = 2;
 	}
