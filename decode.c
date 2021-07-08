@@ -2644,9 +2644,9 @@ static bool DecodeExtendedSegmentPrefix(X86DecoderState* const state, uint8_t op
 {
 	const uint8_t colBit = (opcode & 1);
 
-	// Normal prefixes can't follow rex prefix
+	// The rex prefix must precede the instruction bytes. Other placements are ignored.
 	if (state->rex.byte != 0)
-		return false;
+		state->rex.byte = 0;
 
 	// Only the last segment override prefix matters.
 	state->instr->flags.segments = 0;
@@ -2663,9 +2663,9 @@ static bool DecodeOperandSizePrefix(X86DecoderState* const state, uint8_t opcode
 {
 	static const X86DecoderMode modes[3] = {X86_32BIT, X86_16BIT, X86_16BIT};
 	(void)opcode;
-	// Normal prefixes can't follow rex prefix
+	// The rex prefix must precede the instruction bytes. Other placements are ignored.
 	if (state->rex.byte != 0)
-		return false;
+		state->rex.byte = 0;
 	state->operandMode = modes[state->mode];
 	state->instr->flags.operandSizeOverride = 1;
 	state->secondaryTable = SECONDARY_TABLE_66;
@@ -2677,9 +2677,9 @@ static bool DecodeAddrSizePrefix(X86DecoderState* const state, uint8_t opcode)
 {
 	static const X86DecoderMode modes[3] = {X86_32BIT, X86_16BIT, X86_32BIT};
 	(void)opcode;
-	// Normal prefixes can't follow rex prefix
+	// The rex prefix must precede the instruction bytes. Other placements are ignored.
 	if (state->rex.byte != 0)
-		return false;
+		state->rex.byte = 0;
 	state->addrMode = modes[state->mode];
 	state->instr->flags.addrSizeOverride = 1;
 	return ProcessPrimaryOpcode(state);
@@ -2689,9 +2689,9 @@ static bool DecodeAddrSizePrefix(X86DecoderState* const state, uint8_t opcode)
 static bool DecodeLockPrefix(X86DecoderState* const state, uint8_t opcode)
 {
 	(void)opcode;
-	// Normal prefixes can't follow rex prefix
+	// The rex prefix must precede the instruction bytes. Other placements are ignored.
 	if (state->rex.byte != 0)
-		return false;
+		state->rex.byte = 0;
 	state->instr->flags.lock = 1;
 	return ProcessPrimaryOpcode(state);
 }
@@ -2702,9 +2702,9 @@ static bool DecodeRepPrefix(X86DecoderState* const state, uint8_t opcode)
 	static const SecondaryOpCodeTable decoderTables[] = {SECONDARY_TABLE_F2, SECONDARY_TABLE_F3};
 	const uint8_t colBit = (opcode & 1);
 
-	// Normal prefixes can't follow rex prefix
+	// The rex prefix must precede the instruction bytes. Other placements are ignored.
 	if (state->rex.byte != 0)
-		return false;
+		state->rex.byte = 0;
 
 	// Clear existing rep flags, only the last one counts
 	if (colBit)
