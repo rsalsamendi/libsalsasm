@@ -6230,8 +6230,8 @@ static const InstructionDecoder g_secondaryDecodersF3[256] =
 	DecodeInvalid, DecodeInvalid, DecodeInvalid, DecodeInvalid,
 
 	// Row 0xe
-	DecodeInvalid, DecodeInvalid, DecodeCvtdq2pd, DecodeInvalid,
 	DecodeInvalid, DecodeInvalid, DecodeInvalid, DecodeInvalid,
+	DecodeInvalid, DecodeInvalid, DecodeCvtdq2pd, DecodeInvalid,
 	DecodeInvalid, DecodeInvalid, DecodeInvalid, DecodeInvalid,
 	DecodeInvalid, DecodeInvalid, DecodeInvalid, DecodeInvalid,
 
