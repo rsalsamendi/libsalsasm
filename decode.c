@@ -2088,13 +2088,13 @@ static bool DecodeMovSeg(X86DecoderState* const state, uint8_t opcode)
 	if (!DecodeModRmRmField(state, operandSize, &state->instr->operands[operand0], modRm))
 		return false;
 
-	// Can't load CS using the MOV instruction, only JMP/CALL
-	if ((direction == 0) && (state->instr->operands[0].operandType == X86_CS))
-		return false;
-
 	// Now process the second operand.
 	state->instr->operands[operand1].size = 2;
 	state->instr->operands[operand1].operandType = segments[modRm.reg];
+
+	// Can't load CS using the MOV instruction, only JMP/CALL
+	if (state->instr->operands[0].operandType == X86_CS)
+		return false;
 
 	state->instr->op = X86_MOV;
 	state->instr->operandCount = 2;
